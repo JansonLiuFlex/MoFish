@@ -1,0 +1,334 @@
+﻿<Window x:Class="MoFish.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:MoFish"
+        xmlns:template="clr-namespace:MoFish.Template"
+        WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        mc:Ignorable="d"
+        Title="MoFish"  
+        Width="1280"
+        Height="768"
+        MinWidth="1020"
+        MinHeight="700"
+        Icon="pack://application:,,,/MoFish;component/Resources/mofish.ico"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        >
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
+    
+    <Window.Resources>
+        <DataTemplate x:Key="groupTemplate">
+            <Grid>
+                <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn, Duration=0:0:0.5}">
+                    <Button
+                        Width="60"
+                        Height="60"
+                        HorizontalAlignment="Center"
+                        Background="Red"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"
+                        ToolTip="{Binding GroupName}">
+                        <materialDesign:PackIcon
+                            Width="30"
+                            Height="30"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Kind="{Binding GroupIcon}"/>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Grid x:Name="gridtemp">
+                                                <ContentPresenter
+                                                    x:Name="contentPresenter"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    RecognizesAccessKey="True"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                <materialDesign:PopupBox
+                                                    Grid.Row="1"
+                                                    Foreground="Transparent"
+                                                    PlacementMode="BottomAndAlignCentres"
+                                                    StaysOpen="False">
+                                                    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn, Duration=0:0:0.5}">
+                                                        <ListBox ItemsSource="{Binding Modules}">
+                                                            <ListBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Button
+                                                                        Command="{Binding Path=DataContext.OpenPageCommand, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"
+                                                                        CommandParameter="{Binding Name}"
+                                                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <!--<materialDesign:PackIcon
+                                                                                Width="20"
+                                                                                Height="20"
+                                                                                VerticalAlignment="Center"
+                                                                                Kind="{Binding Code}" />-->
+                                                                            <TextBlock  
+                                                                                VerticalAlignment="Center"
+                                                                                FontSize="14"
+                                                                                Text="{Binding Code}"
+                                                                                FontFamily="pack://application:,,,/MoFish;component/Resources/Fonts/iconfont.ttf#iconFont"
+                                                                                ></TextBlock>
+                                                                            <TextBlock
+                                                                                Margin="10,0,30,0"
+                                                                                VerticalAlignment="Center"
+                                                                                FontSize="14"
+                                                                                Text="{Binding Name}" />
+                                                                        </StackPanel>
+                                                                    </Button>
+                                                                </DataTemplate>
+                                                            </ListBox.ItemTemplate>
+                                                        </ListBox>
+                                                    </materialDesign:TransitioningContent>
+                                                </materialDesign:PopupBox>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </materialDesign:TransitioningContent>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="expanderTemplate">
+            <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn, Duration=0:0:0.5}">
+                <Expander Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                    <Expander.Header>
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="30"
+                                Height="30"
+                                VerticalAlignment="Center"
+                                Kind="{Binding GroupIcon}" />
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="{Binding GroupName}" />
+                        </StackPanel>
+                    </Expander.Header>
+                    <Expander.Content>
+                        <ItemsControl HorizontalContentAlignment="Left" ItemsSource="{Binding Modules}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="40 0 0 0">
+                                        <TextBlock  
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding Code}"
+                                        FontFamily="pack://application:,,,/MoFish;component/Resources/Fonts/iconfont.ttf#iconFont"
+                                        ></TextBlock>
+                                        <Button
+                                        Height="35"
+                                        Command="{Binding Path=DataContext.OpenPageCommand, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"
+                                        CommandParameter="{Binding Name}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                            <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Text="{Binding Name}" />
+                                        </Button>
+                                    </StackPanel>
+                                    
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander.Content>
+                </Expander>
+            </materialDesign:TransitioningContent>
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <materialDesign:DialogHost Identifier="Root" IsOpen="{Binding DialogIsOpen}">
+        <materialDesign:DialogHost.DialogContent>
+            <Border Width="300" Height="150" Background="White">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" Value="0" Width="50" IsIndeterminate="True"></ProgressBar>
+                    <TextBlock Margin="0 50 0 0" Text="正在加载,请稍候..." FontSize="20" Foreground="#737373"></TextBlock>
+                </StackPanel>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid x:Name="Menu" Width="60">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="125"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Image
+                    Width="36"
+                    Height="36"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="pack://application:,,,/MoFish;component/Resources/Images/timg.jpg">
+                    <Image.Clip>
+                        <EllipseGeometry
+                            Center="18,18"
+                            RadiusX="18"
+                            RadiusY="18" />
+                    </Image.Clip>
+                </Image>
+
+                <!--左侧菜单栏-->
+                <ItemsControl Name="IC" Grid.Row="1" ItemsSource="{Binding ModuleManager.ModuleGroups}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplateSelector>
+                        <template:ModuleTemplateSelector ExpanderTemplate="{StaticResource expanderTemplate}" GroupTemplate="{StaticResource groupTemplate}" />
+                    </ItemsControl.ItemTemplateSelector>
+                </ItemsControl>
+            </Grid>
+
+            <materialDesign:Snackbar x:Name="SnackbarThree" Grid.ColumnSpan="2" Panel.ZIndex="1" VerticalAlignment="Top"  MessageQueue="{materialDesign:MessageQueue}"></materialDesign:Snackbar>
+            
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--顶部工具栏-->
+                <materialDesign:ColorZone Padding="10 30 20 10" VerticalAlignment="Top" Mode="PrimaryMid" materialDesign:ShadowAssist.ShadowDepth="Depth0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton
+                                Name="toggle"
+                                Width="30"
+                                Height="30"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                Command="{Binding ExpandMenuCommand}"
+                                FocusVisualStyle="{x:Null}"
+                                Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="22">
+                                Welcome to MoFish
+                            </TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <materialDesign:PopupBox
+                                FocusVisualStyle="{x:Null}"
+                                PlacementMode="BottomAndAlignRightEdges"
+                                StaysOpen="False">
+                                <StackPanel>
+                                    <Button Click="btnGithub">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Github" />
+                                            <TextBlock Text="  Github" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Click="btnBilibili">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="AlphaBBox" />
+                                            <TextBlock Text="  视频教程" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Click="btnQQ">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon VerticalAlignment="Center" Kind="Qqchat" />
+                                            <TextBlock Text="  加入QQ" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+
+                            <Button
+                                Command="{Binding MinCommand}"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                ToolTip="最小化">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Center"
+                                        Kind="WindowMinimize" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button
+                                Command="{Binding MaxCommand}"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                ToolTip="最大化">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Center"
+                                        Kind="WindowMaximize" />
+                                </StackPanel>
+                            </Button>
+
+                            <Button
+                                Command="{Binding ExitCommand}"
+                                Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                                ToolTip="退出系统">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Center"
+                                        Kind="WindowClose" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <!--tab窗口占位-->
+                        <Grid Grid.Row="1">
+                            <Button Content="Test" Width="100" Height="40"></Button>
+                        </Grid>
+                    </Grid>
+                </materialDesign:ColorZone>
+
+                <!--  工具栏(显示标签和功能清单)  -->
+                <!--<materialDesign:ColorZone Grid.Row="1" CornerRadius="3">
+                    <DockPanel>
+                        <TextBlock
+                            Padding="15"
+                            FontSize="26"
+                            FontWeight="Bold"
+                            Text="{Binding ElementName=page, Path=Content.DataContext.SelectPageTitle}" />
+                        <template:ToolbarContainer HorizontalAlignment="Right" DataContext="{Binding ElementName=page, Path=Content.DataContext}" />
+                    </DockPanel>
+                </materialDesign:ColorZone>-->
+
+                <!--  右侧内容区域  -->
+                <ContentControl
+                    Name="page"
+                    Grid.Row="3"
+                    Content="{Binding CurrentModule.Body}" />
+            </Grid>
+        </Grid>
+
+    </materialDesign:DialogHost>
+
+</Window>

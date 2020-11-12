@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\UserControls\**" />
+    <EmbeddedResource Remove="Common\UserControls\**" />
+    <None Remove="Common\UserControls\**" />
+    <Page Remove="Common\UserControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Fonts\iconfont.ttf" />
+    <None Remove="Resources\Images\baby.jpg" />
+    <None Remove="Resources\Images\dongliya.jpg" />
+    <None Remove="Resources\Images\gaoyuanyuan.jpg" />
+    <None Remove="Resources\Images\JayZhou.jpg" />
+    <None Remove="Resources\Images\liangzi.jpg" />
+    <None Remove="Resources\Images\liuyifei.jpg" />
+    <None Remove="Resources\Images\pengyuyan.jpg" />
+    <None Remove="Resources\Images\timg.jpg" />
+    <None Remove="Resources\Images\wangzuxian.jpg" />
+    <None Remove="Resources\Images\wujing.jpg" />
+    <None Remove="Resources\Images\wuyifan.jpg" />
+    <None Remove="Resources\Images\yajiao.jpg" />
+    <None Remove="Resources\Images\yajiao2.jpg" />
+    <None Remove="Resources\Images\yuwenwen.jpg" />
+    <None Remove="Resources\mofish.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="1.2.7-ci1979" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0-ci1979" />
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoFish.Core\MoFish.Core.csproj" />
+    <ProjectReference Include="..\MoFish.Services\MoFish.Services.csproj" />
+    <ProjectReference Include="..\MoFish.ViewModel\MoFish.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\iconfont.ttf" />
+    <Resource Include="Resources\Images\baby.jpg" />
+    <Resource Include="Resources\Images\dongliya.jpg" />
+    <Resource Include="Resources\Images\gaoyuanyuan.jpg" />
+    <Resource Include="Resources\Images\JayZhou.jpg" />
+    <Resource Include="Resources\Images\liangzi.jpg" />
+    <Resource Include="Resources\Images\liuyifei.jpg" />
+    <Resource Include="Resources\Images\pengyuyan.jpg" />
+    <Resource Include="Resources\Images\timg.jpg" />
+    <Resource Include="Resources\Images\wangzuxian.jpg" />
+    <Resource Include="Resources\Images\wujing.jpg" />
+    <Resource Include="Resources\Images\wuyifan.jpg" />
+    <Resource Include="Resources\Images\yajiao.jpg" />
+    <Resource Include="Resources\Images\yajiao2.jpg" />
+    <Resource Include="Resources\Images\yuwenwen.jpg" />
+    <Resource Include="Resources\mofish.ico" />
+  </ItemGroup>
+
+</Project>
